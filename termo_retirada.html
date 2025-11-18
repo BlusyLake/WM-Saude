@@ -4,28 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Termo de Retirada - WM Saúde</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23004a91;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23d16a6a;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath fill='url(%23grad)' d='M50 10 C28 10 10 28 10 50 S28 90 50 90 S90 72 90 50 S72 10 50 10 Z M50 80 C33.5 80 20 66.5 20 50 C20 33.5 33.5 20 50 20 C66.5 20 80 33.5 80 50 C80 66.5 66.5 80 50 80 Z' /%3E%3Crect fill='%23004a91' x='42' y='30' width='16' height='40' rx='2' /%3E%3Crect fill='%23004a91' x='30' y='42' width='40' height='16' rx='2' /%3E%3Ccircle fill='%23d16a6a' cx='65' cy='35' r='6' /%3E%3Cpath stroke='%23d16a6a' stroke-width='3' fill='none' d='M70 50 L75 45 L80 50 L85 45' /%3E%3C/svg%3E" type="image/svg+xml">
     <style>
-        body,html{margin:0;padding:0;font-family:Calibri,sans-serif;background-color:#f4f4f9}.page-wrapper{display:flex;width:100%;min-height:100vh;background-color:#fff}.left-border{width:60px;flex-shrink:0;background:repeating-linear-gradient(45deg,#d16a6a,#d16a6a 5px,transparent 5px,transparent 10px),repeating-linear-gradient(-45deg,#004a91,#004a91 5px,transparent 5px,transparent 10px)}.main-content{flex-grow:1;padding:40px;display:flex;flex-direction:column}header{width:100%;display:flex;justify-content:flex-end;margin-bottom:20px;flex-shrink:0}header img{max-width:220px;height:auto}.form-container{flex-grow:1;display:flex;flex-direction:column}form{display:flex;flex-direction:column;gap:15px;flex-grow:1}footer{width:100%;margin-top:30px;padding-top:15px;border-top:1px solid #eee;text-align:right;font-size:11px;color:#555;line-height:1.5;flex-shrink:0}h1{text-align:center;font-size:1.4em;margin-top:0;margin-bottom:15px;color:#004a91}.declaracao{font-size:.9em;text-align:justify;margin-bottom:20px;border-left:3px solid #ccc;padding-left:15px;color:#555}fieldset{border:1px solid #ddd;border-radius:5px;padding:15px}legend{font-weight:700;color:#004a91;padding:0 10px}.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:15px}.form-group{display:flex;flex-direction:column}label{margin-bottom:5px;font-weight:700;color:#444}.form-input{width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;box-sizing:border-box}.action-buttons{display:flex;justify-content:flex-end;gap:15px;margin-top:20px}.btn{padding:10px 20px;border:none;border-radius:5px;font-weight:700;cursor:pointer;transition:background-color .3s}.btn-print{background-color:#004a91;color:#fff}.btn-print:hover{background-color:#003366}.btn-reset{background-color:#6c757d;color:#fff}.btn-reset:hover{background-color:#5a6268}
-        .item-row{display:flex;gap:10px;align-items:flex-end;margin-bottom:10px}.item-row .form-group{flex-grow:1}.btn-remove{background:0 0;border:none;color:#dc3545;cursor:pointer;padding:8px;font-weight:700}.btn-add{background-color:#28a745;color:#fff;margin-top:10px;align-self:flex-start}.btn-add:hover{background-color:#218838}
-        
+        body,html{margin:0;padding:0;font-family:Calibri,sans-serif;background-color:#f4f4f9}
+        .page-wrapper{display:flex;width:100%;min-height:100vh;background-color:#fff}
+        .left-border{width:60px;flex-shrink:0;background:repeating-linear-gradient(45deg,#d16a6a,#d16a6a 5px,transparent 5px,transparent 10px),repeating-linear-gradient(-45deg,#004a91,#004a91 5px,transparent 5px,transparent 10px)}
+        .main-content{flex-grow:1;padding:40px;display:flex;flex-direction:column}
+        header{width:100%;display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-shrink:0}
+        header img{max-width:220px;height:auto}
+        .form-container{flex-grow:1;display:flex;flex-direction:column}
+        form{display:flex;flex-direction:column;gap:15px;flex-grow:1}
+        footer{width:100%;margin-top:30px;padding-top:15px;border-top:1px solid #eee;text-align:right;font-size:11px;color:#555;line-height:1.5;flex-shrink:0}
+        h1{text-align:center;font-size:1.4em;margin-top:0;margin-bottom:15px;color:#004a91}
+        .declaracao{font-size:.9em;text-align:justify;margin-bottom:20px;border-left:3px solid #ccc;padding-left:15px;color:#555}
+        fieldset{border:1px solid #ddd;border-radius:5px;padding:15px}
+        legend{font-weight:700;color:#004a91;padding:0 10px}
+        .form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:15px}
+        .form-group{display:flex;flex-direction:column}
+        label{margin-bottom:5px;font-weight:700;color:#444}
+        .form-input{width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;box-sizing:border-box}
+        .action-buttons{display:flex;justify-content:flex-end;gap:15px;margin-top:20px;flex-wrap:wrap}
+        .btn{padding:10px 20px;border:none;border-radius:5px;font-weight:700;cursor:pointer;transition:background-color .3s;color:#fff}
+        .btn-reset{background-color:#6c757d} .btn-print{background-color:#004a91} .btn-send{background-color:#28a745}
+        .btn-back{background-color:#666;padding:8px 15px;text-decoration:none;border-radius:4px;font-size:0.9em;color:#fff;display:inline-block}
+        .item-row{display:flex;gap:10px;align-items:flex-end;margin-bottom:10px} .item-row .form-group{flex-grow:1}
+        .btn-remove{background:0 0;border:none;color:#dc3545;cursor:pointer;padding:8px;font-weight:700}
+        .btn-add{background-color:#28a745;color:#fff;margin-top:10px;align-self:flex-start}
+        .driver-link{display:inline-block;margin-bottom:10px;color:#004a91;text-decoration:none;font-size:0.9em;border:1px dashed #004a91;padding:8px 15px;border-radius:4px;background-color:#f0f7ff;font-weight:700}
+        #coordenadas_leitura{font-size:0.8em;color:#666;margin-top:3px;font-style:italic}
         @media print{
-            @page{size:A4;margin:0;}
-            body,html{background-color:#fff;font-size:11pt;color:#000}
+            @page{size:A4;margin:0} body,html{background-color:#fff;font-size:11pt;color:#000}
             .page-wrapper{min-height:297mm;height:297mm;width:210mm;box-shadow:none;margin:0;display:flex}
             .main-content{padding:15mm 20mm;width:100%;height:100%;box-sizing:border-box;display:flex;flex-direction:column}
-            .form-container,.form{flex-grow:1;display:flex;flex-direction:column}
+            .form-container{flex-grow:1;display:flex;flex-direction:column}
+            form{flex-grow:1;display:flex;flex-direction:column;gap:15px}
             .left-border{display:block;width:15mm;flex-shrink:0}
-            .action-buttons,.btn-add,.btn-remove{display:none}
-            header{margin-bottom:15px}header img{max-width:200px}
-            h1{font-size:16pt;margin-bottom:15px;color:#000}
-            legend{font-size:12pt;color:#000}
-            .declaracao{font-size:10pt;margin-bottom:15px;line-height:1.4}
-            form{gap:15px}
-            fieldset{padding:12px}
-            .form-grid{grid-template-columns:1fr 1fr}
-            .item-row .form-grid, .item-row {grid-template-columns:repeat(4,1fr);display:grid}
+            .action-buttons,.btn-add,.btn-remove,.no-print,.btn-back,.driver-link,#coordenadas_leitura{display:none!important}
+            header{justify-content:flex-end;margin-bottom:15px}
             .form-input{border:1px solid #666;background-color:transparent;padding:6px;border-radius:0;color:#000}
-            .item-row{page-break-inside:avoid}
             footer{margin-top:auto;padding-top:10px;font-size:9pt;line-height:1.4}
         }
     </style>
@@ -34,66 +50,107 @@
     <div class="page-wrapper">
         <div class="left-border"></div>
         <div class="main-content">
-            <header><img src="icon.jpg" alt="Logo WM Saúde"></header>
+            <header>
+                <a href="index.html" class="btn btn-back">⬅ Voltar</a>
+                <img src="icon.jpg" alt="Logo WM Saúde">
+            </header>
             <div class="form-container">
-                <h1>TERMO DE RESPONSABILIDADE RETIRADA DE EQUIPAMENTO</h1>
-                <form id="termoForm">
+                <h1>TERMO DE RETIRADA DE EQUIPAMENTO</h1>
+                <form id="relatorioForm" enctype="multipart/form-data">
                     <fieldset>
                         <legend>Informações Gerais</legend>
-                        <div class="form-grid"><div class="form-group"><label for="data">Data:</label><input type="date" id="data" name="data" class="form-input" required></div><div class="form-group"><label for="municipio">Município:</label><input type="text" id="municipio" name="municipio" class="form-input" required></div><div class="form-group"><label for="unidade">Unidade:</label><input type="text" id="unidade" name="unidade" class="form-input" required></div></div>
+                        <div class="form-grid">
+                            <div class="form-group"><label>Data:</label><input type="date" id="data_visita" name="data_visita" class="form-input"></div>
+                            <div class="form-group">
+                                <label>Município:</label>
+                                <input type="text" id="municipio" name="municipio" class="form-input" placeholder="Aguardando GPS...">
+                                <div id="coordenadas_leitura">Iniciando GPS...</div>
+                                <input type="hidden" id="coordenadas" name="coordenadas">
+                            </div>
+                            <div class="form-group"><label>Unidade:</label><input type="text" id="nome_unidade" name="nome_unidade" class="form-input" placeholder="Carregando..."></div>
+                        </div>
                     </fieldset>
                      <fieldset>
-                        <legend>Equipamentos Retirados da Unidade</legend>
+                        <legend>Equipamentos Retirados</legend>
                         <div id="itens-container">
                             <div class="item-row form-grid">
                                 <div class="form-group"><label>Equipamento:</label><input type="text" name="ret_equipamento[]" class="form-input"></div>
-                                <div class="form-group"><label>Marca/Modelo:</label><input type="text" name="ret_modelo[]" class="form-input"></div>
+                                <div class="form-group"><label>Modelo:</label><input type="text" name="ret_modelo[]" class="form-input"></div>
                                 <div class="form-group"><label>N/S:</label><input type="text" name="ret_ns[]" class="form-input"></div>
                                 <div class="form-group"><label>Patrimônio:</label><input type="text" name="ret_patrimonio[]" class="form-input"></div>
                             </div>
                         </div>
-                        <button type="button" id="addItemBtn" class="btn btn-add">+ Adicionar Item</button>
+                        <button type="button" id="addItemBtn" class="btn btn-add">+ Item</button>
                     </fieldset>
-                    <p class="declaracao">Atesto para os devidos fins que o(s) equipamento(s) acima descritos foram retirados desta unidade pelo técnico responsável para fins de manutenção externa e/ou análise técnica.</p>
+                    <p class="declaracao">Atesto que o(s) equipamento(s) acima foram retirados desta unidade para manutenção externa/análise.</p>
+                    <fieldset class="no-print">
+                        <legend>Anexo Assinado</legend>
+                        <a href="https://s3.blusy.com.br/drivers-publicos/SCANUTILITY.exe" class="driver-link" target="_blank">⬇️ Baixar Scanner Canon G3110</a>
+                        <div class="form-group"><input type="file" id="arquivo_assinado" name="arquivo_assinado" class="form-input" accept="image/*, application/pdf"></div>
+                    </fieldset>
                     <fieldset>
                         <legend>Responsáveis</legend>
-                        <div class="form-grid"><div class="form-group"><label for="tecnico_responsavel">Técnico Responsável:</label><input type="text" id="tecnico_responsavel" name="tecnico_responsavel" class="form-input" required></div><div class="form-group"><label for="responsavel_unidade">Responsável pela unidade (nome legível):</label><input type="text" id="responsavel_unidade" name="responsavel_unidade" class="form-input" required></div></div>
+                        <div class="form-grid"><div class="form-group"><label>Técnico:</label><input type="text" name="tecnico_responsavel" class="form-input"></div><div class="form-group"><label>Responsável Unidade:</label><input type="text" name="responsavel_unidade" class="form-input"></div></div>
                     </fieldset>
-                    <div class="action-buttons"><button type="reset" class="btn btn-reset">Limpar Formulário</button><button type="button" id="btnPrint" class="btn btn-print">Imprimir / Gerar PDF</button></div>
+                    <div class="action-buttons"><button type="reset" class="btn btn-reset">Limpar</button><button type="button" id="btnPrint" class="btn btn-print">🖨️ Imprimir</button><button type="button" id="btnEnviar" class="btn btn-send">☁️ Enviar</button></div>
                 </form>
             </div>
             <footer></footer>
         </div>
     </div>
     <script>
+        const API_ENDPOINT = 'http://api.blusy.com.br/api/upload-chamado';
         document.addEventListener('DOMContentLoaded', function() {
-            const dataInput = document.getElementById('data');
+            const dataInput = document.getElementById('data_visita');
             if(dataInput) dataInput.value = new Date().toISOString().split('T')[0];
-            const itensContainer = document.getElementById('itens-container');
+            document.getElementById('btnPrint').addEventListener('click', function() { window.print(); });
+
             const addItemBtn = document.getElementById('addItemBtn');
             if(addItemBtn){
                 addItemBtn.addEventListener('click', function() {
-                    const itemRow = document.createElement('div');
-                    itemRow.classList.add('item-row', 'form-grid');
-                    itemRow.innerHTML = `
-                        <div class="form-group"><input type="text" name="ret_equipamento[]" class="form-input" placeholder="Equipamento"></div>
-                        <div class="form-group"><input type="text" name="ret_modelo[]" class="form-input" placeholder="Marca/Modelo"></div>
-                        <div class="form-group"><input type="text" name="ret_ns[]" class="form-input" placeholder="N/S"></div>
-                        <div class="form-group"><input type="text" name="ret_patrimonio[]" class="form-input" placeholder="Patrimônio"></div>
-                        <button type="button" class="btn-remove">Remover</button>
-                    `;
-                    itensContainer.appendChild(itemRow);
+                    const c = document.getElementById('itens-container');
+                    const r = document.createElement('div');
+                    r.classList.add('item-row', 'form-grid');
+                    r.innerHTML = `<div class="form-group"><input type="text" name="ret_equipamento[]" class="form-input" placeholder="Equipamento"></div><div class="form-group"><input type="text" name="ret_modelo[]" class="form-input" placeholder="Modelo"></div><div class="form-group"><input type="text" name="ret_ns[]" class="form-input" placeholder="N/S"></div><div class="form-group"><input type="text" name="ret_patrimonio[]" class="form-input" placeholder="Patrimônio"></div><button type="button" class="btn-remove">X</button>`;
+                    c.appendChild(r);
                 });
-                itensContainer.addEventListener('click', function(e) {
-                    if (e.target && e.target.classList.contains('btn-remove')) {
-                        if (itensContainer.children.length > 1) {
-                             e.target.closest('.item-row').remove();
-                        }
-                    }
+                document.getElementById('itens-container').addEventListener('click', function(e) {
+                    if(e.target.classList.contains('btn-remove')) e.target.closest('.item-row').remove();
                 });
             }
+
+            const coordenadasInput = document.getElementById('coordenadas');
+            const coordenadasLeitura = document.getElementById('coordenadas_leitura');
+            const municipioInput = document.getElementById('municipio');
+            const unidadeInput = document.getElementById('nome_unidade');
+
+            if(navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(pos) {
+                    const lat = pos.coords.latitude, lon = pos.coords.longitude;
+                    coordenadasInput.value = `${lat.toFixed(6)}, ${lon.toFixed(6)}`;
+                    coordenadasLeitura.textContent = "✔ GPS OK.";
+                    coordenadasLeitura.style.color = 'green';
+                    fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lon}&zoom=18&addressdetails=1`, {headers:{'User-Agent':'WMSaude-App/1.0'}})
+                    .then(r=>r.json()).then(d=>{
+                        if(municipioInput) municipioInput.value=d.address.city||d.address.town||'';
+                        if(unidadeInput) unidadeInput.value=d.name||'';
+                    });
+                }, ()=>{ coordenadasLeitura.textContent="⚠️ GPS Indisponível."; coordenadasLeitura.style.color='red'; });
+            }
+
+            const btnEnviar = document.getElementById('btnEnviar');
+            const form = document.getElementById('relatorioForm');
+            btnEnviar.addEventListener('click', function() {
+                const old = btnEnviar.textContent;
+                btnEnviar.textContent = 'Enviando...';
+                btnEnviar.disabled = true;
+                fetch(API_ENDPOINT, {method:'POST', body:new FormData(form)})
+                .then(r=>r.json()).then(d=>{
+                    if(d.status==='success') alert('✅ Sucesso!'); else alert('❌ Erro: '+d.message);
+                }).catch(()=>alert('❌ Erro de Conexão.'))
+                .finally(()=>{ btnEnviar.textContent = old; btnEnviar.disabled = false; });
+            });
         });
-        document.getElementById('btnPrint').addEventListener('click', function() { window.print(); });
     </script>
 </body>
 </html>
