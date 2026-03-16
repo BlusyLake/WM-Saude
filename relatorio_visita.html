@@ -45,6 +45,7 @@
             .action-buttons,.no-print,.btn-back,.driver-link,#coordenadas_leitura{display:none!important}
             header{justify-content:flex-end;margin-bottom:15px}
             .form-input{border:1px solid #666;background-color:transparent;padding:6px;border-radius:0;color:#000}
+            .form-group.print-hide-empty,.item-row.print-hide-empty-row{display:none!important}
             textarea.form-input{height:auto;flex-grow:1;resize:none}
             footer{margin-top:auto;padding-top:10px;font-size:9pt;line-height:1.4}
         }
@@ -75,7 +76,7 @@
                             <div class="form-group"><label>Tipo de unidade:</label><input type="text" id="tipo_unidade" name="tipo_unidade" class="form-input" placeholder="Carregando..."></div>
                             <div class="form-group"><label>Nome da unidade:</label><input type="text" id="nome_unidade" name="nome_unidade" class="form-input" placeholder="Carregando..."></div>
                             <div class="form-group"><label>Número de Série:</label><input type="text" name="numero_serie" class="form-input"></div>
-                            <div class="form-group"><label>Tombo:</label><input type="text" name="tombo" class="form-input"></div>
+                            <div class="form-group"><label>Patrimônio:</label><input type="text" name="patrimonio" class="form-input"></div>
                         </div>
                         <div class="form-group" style="margin-top:15px"><label>Tipo de visita:</label><div class="radio-group"><div class="radio-item"><input type="radio" id="visita_programada" name="tipo_visita" value="PROGRAMADA"><label for="visita_programada">PROGRAMADA</label></div><div class="radio-item"><input type="radio" id="visita_rotina" name="tipo_visita" value="ROTINA"><label for="visita_rotina">ROTINA</label></div><div class="radio-item"><input type="radio" id="visita_solicitada" name="tipo_visita" value="SOLICITADA" checked=""><label for="visita_solicitada">SOLICITADA</label></div><div class="radio-item"><input type="radio" id="visita_implantacao" name="tipo_visita" value="IMPLANTAÇÃO"><label for="visita_implantacao">IMPLANTAÇÃO</label></div></div></div>
                     </fieldset>
@@ -102,6 +103,86 @@
             if (dataInput) dataInput.value = new Date().toISOString().split('T')[0];
             const btnPrint = document.getElementById('btnPrint');
             if (btnPrint) btnPrint.addEventListener('click', function() { window.print(); });
+
+            const form = document.getElementById('relatorioForm');
+            const STORAGE_KEY = `wm-saude:${window.location.pathname}:draft`;
+
+            function isFieldFilled(field) {
+                if (field.type === 'file') return field.files && field.files.length > 0;
+                if (field.type === 'checkbox' || field.type === 'radio') return field.checked;
+                return field.value && field.value.trim() !== '';
+            }
+
+            function updatePrintVisibility() {
+                document.querySelectorAll('.form-group').forEach(function(group) {
+                    const fields = group.querySelectorAll('input, textarea, select');
+                    if (!fields.length) return;
+                    const hasValue = Array.from(fields).some(isFieldFilled);
+                    group.classList.toggle('print-hide-empty', !hasValue);
+                });
+
+                document.querySelectorAll('.item-row').forEach(function(row) {
+                    const fields = row.querySelectorAll('input, textarea, select');
+                    if (!fields.length) return;
+                    const hasValue = Array.from(fields).some(isFieldFilled);
+                    row.classList.toggle('print-hide-empty-row', !hasValue);
+                });
+            }
+
+            function saveDraft() {
+                if (!form) return;
+                const values = {};
+                form.querySelectorAll('input, textarea, select').forEach(function(field, index) {
+                    if (field.type === 'file') return;
+                    const key = `${field.name || field.id || field.type}::${index}`;
+                    values[key] = (field.type === 'checkbox' || field.type === 'radio') ? field.checked : field.value;
+                });
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(values));
+            }
+
+            function restoreDraft() {
+                if (!form) return;
+                const raw = localStorage.getItem(STORAGE_KEY);
+                if (!raw) return;
+                try {
+                    const values = JSON.parse(raw);
+                    form.querySelectorAll('input, textarea, select').forEach(function(field, index) {
+                        if (field.type === 'file') return;
+                        const key = `${field.name || field.id || field.type}::${index}`;
+                        if (!(key in values)) return;
+                        if (field.type === 'checkbox' || field.type === 'radio') {
+                            field.checked = Boolean(values[key]);
+                        } else {
+                            field.value = values[key];
+                        }
+                    });
+                } catch (err) {
+                    console.warn('Não foi possível restaurar o rascunho.', err);
+                }
+            }
+
+            function clearDraft() {
+                localStorage.removeItem(STORAGE_KEY);
+            }
+
+            restoreDraft();
+            if (form) {
+                form.addEventListener('input', saveDraft);
+                form.addEventListener('change', saveDraft);
+                form.addEventListener('reset', function() {
+                    setTimeout(function() {
+                        clearDraft();
+                        updatePrintVisibility();
+                    }, 0);
+                });
+            }
+
+            window.addEventListener('beforeprint', updatePrintVisibility);
+            window.addEventListener('afterprint', function() {
+                document.querySelectorAll('.print-hide-empty, .print-hide-empty-row').forEach(function(el) {
+                    el.classList.remove('print-hide-empty', 'print-hide-empty-row');
+                });
+            });
 
             const coordenadasInput = document.getElementById('coordenadas');
             const coordenadasLeitura = document.getElementById('coordenadas_leitura');
@@ -139,7 +220,6 @@
             iniciarLocalizacao();
 
             const btnEnviar = document.getElementById('btnEnviar');
-            const form = document.getElementById('relatorioForm');
             btnEnviar.addEventListener('click', function() {
                 const oldText = btnEnviar.textContent;
                 btnEnviar.textContent = 'Enviando...';

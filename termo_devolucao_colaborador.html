@@ -42,6 +42,7 @@
             .action-buttons,.btn-add,.btn-remove,.no-print,.btn-back,.driver-link,#coordenadas_leitura{display:none!important}
             header{justify-content:flex-end;margin-bottom:15px}
             .form-input{border:1px solid #666;background-color:transparent;padding:6px;border-radius:0;color:#000}
+            .form-group.print-hide-empty,.item-row.print-hide-empty-row{display:none!important}
             footer{margin-top:auto;padding-top:10px;font-size:9pt;line-height:1.4}
         }
     </style>
@@ -79,7 +80,7 @@
                                 <div class="form-group"><label>Equipamento:</label><input type="text" name="equipamento[]" class="form-input"></div>
                                 <div class="form-group"><label>Modelo:</label><input type="text" name="modelo[]" class="form-input"></div>
                                 <div class="form-group"><label>Número de Série:</label><input type="text" name="numero_serie[]" class="form-input"></div>
-                                <div class="form-group"><label>Tombo:</label><input type="text" name="tombo[]" class="form-input"></div>
+                                <div class="form-group"><label>Patrimônio:</label><input type="text" name="patrimonio[]" class="form-input"></div>
                             </div>
                         </div>
                         <button type="button" id="addItemBtn" class="btn btn-add">+ Item</button>
@@ -107,13 +108,93 @@
             if(dataInput) dataInput.value = new Date().toISOString().split('T')[0];
             document.getElementById('btnPrint').addEventListener('click', function() { window.print(); });
 
+            const form = document.getElementById('relatorioForm');
+            const STORAGE_KEY = `wm-saude:${window.location.pathname}:draft`;
+
+            function isFieldFilled(field) {
+                if (field.type === 'file') return field.files && field.files.length > 0;
+                if (field.type === 'checkbox' || field.type === 'radio') return field.checked;
+                return field.value && field.value.trim() !== '';
+            }
+
+            function updatePrintVisibility() {
+                document.querySelectorAll('.form-group').forEach(function(group) {
+                    const fields = group.querySelectorAll('input, textarea, select');
+                    if (!fields.length) return;
+                    const hasValue = Array.from(fields).some(isFieldFilled);
+                    group.classList.toggle('print-hide-empty', !hasValue);
+                });
+
+                document.querySelectorAll('.item-row').forEach(function(row) {
+                    const fields = row.querySelectorAll('input, textarea, select');
+                    if (!fields.length) return;
+                    const hasValue = Array.from(fields).some(isFieldFilled);
+                    row.classList.toggle('print-hide-empty-row', !hasValue);
+                });
+            }
+
+            function saveDraft() {
+                if (!form) return;
+                const values = {};
+                form.querySelectorAll('input, textarea, select').forEach(function(field, index) {
+                    if (field.type === 'file') return;
+                    const key = `${field.name || field.id || field.type}::${index}`;
+                    values[key] = (field.type === 'checkbox' || field.type === 'radio') ? field.checked : field.value;
+                });
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(values));
+            }
+
+            function restoreDraft() {
+                if (!form) return;
+                const raw = localStorage.getItem(STORAGE_KEY);
+                if (!raw) return;
+                try {
+                    const values = JSON.parse(raw);
+                    form.querySelectorAll('input, textarea, select').forEach(function(field, index) {
+                        if (field.type === 'file') return;
+                        const key = `${field.name || field.id || field.type}::${index}`;
+                        if (!(key in values)) return;
+                        if (field.type === 'checkbox' || field.type === 'radio') {
+                            field.checked = Boolean(values[key]);
+                        } else {
+                            field.value = values[key];
+                        }
+                    });
+                } catch (err) {
+                    console.warn('Não foi possível restaurar o rascunho.', err);
+                }
+            }
+
+            function clearDraft() {
+                localStorage.removeItem(STORAGE_KEY);
+            }
+
+            restoreDraft();
+            if (form) {
+                form.addEventListener('input', saveDraft);
+                form.addEventListener('change', saveDraft);
+                form.addEventListener('reset', function() {
+                    setTimeout(function() {
+                        clearDraft();
+                        updatePrintVisibility();
+                    }, 0);
+                });
+            }
+
+            window.addEventListener('beforeprint', updatePrintVisibility);
+            window.addEventListener('afterprint', function() {
+                document.querySelectorAll('.print-hide-empty, .print-hide-empty-row').forEach(function(el) {
+                    el.classList.remove('print-hide-empty', 'print-hide-empty-row');
+                });
+            });
+
             const addItemBtn = document.getElementById('addItemBtn');
             if(addItemBtn){
                 addItemBtn.addEventListener('click', function() {
                     const c = document.getElementById('itens-container');
                     const r = document.createElement('div');
                     r.classList.add('item-row', 'form-grid');
-                    r.innerHTML = `<div class="form-group"><input type="text" name="equipamento[]" class="form-input" placeholder="Equipamento"></div><div class="form-group"><input type="text" name="modelo[]" class="form-input" placeholder="Modelo"></div><div class="form-group"><input type="text" name="numero_serie[]" class="form-input" placeholder="Número de Série"></div><div class="form-group"><input type="text" name="tombo[]" class="form-input" placeholder="Tombo"></div><button type="button" class="btn-remove">X</button>`;
+                    r.innerHTML = `<div class="form-group"><input type="text" name="equipamento[]" class="form-input" placeholder="Equipamento"></div><div class="form-group"><input type="text" name="modelo[]" class="form-input" placeholder="Modelo"></div><div class="form-group"><input type="text" name="numero_serie[]" class="form-input" placeholder="Número de Série"></div><div class="form-group"><input type="text" name="patrimonio[]" class="form-input" placeholder="Patrimônio"></div><button type="button" class="btn-remove">X</button>`;
                     c.appendChild(r);
                 });
                 document.getElementById('itens-container').addEventListener('click', function(e) {
@@ -141,7 +222,6 @@
             }
 
             const btnEnviar = document.getElementById('btnEnviar');
-            const form = document.getElementById('relatorioForm');
             btnEnviar.addEventListener('click', function() {
                 const old = btnEnviar.textContent;
                 btnEnviar.textContent = 'Enviando...';
