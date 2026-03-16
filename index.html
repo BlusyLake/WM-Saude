@@ -21,9 +21,21 @@
         .doc-card h2 { font-size: 1.1em; color: #004a91; margin-top: 0; }
         .doc-card p { font-size: 0.85em; color: #666; }
         .admin-panel { margin-top: 50px; padding-top: 30px; border-top: 1px dashed #ccc; }
+        .admin-actions { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-top: 12px; }
         .btn-bucket { display: inline-flex; align-items: center; gap: 10px; padding: 12px 25px; background-color: #6f42c1; color: white; text-decoration: none; border-radius: 5px; font-weight: bold; transition: background 0.3s; border: none; cursor: pointer; }
         .btn-bucket:hover { background-color: #59359a; }
+        .btn-drivers { display: inline-flex; align-items: center; gap: 8px; padding: 12px 25px; background-color: #004a91; color: white; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; transition: background 0.3s; }
+        .btn-drivers:hover { background-color: #00386f; }
         .btn-bucket svg { width: 24px; height: 24px; fill: white; }
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.45); display: none; align-items: center; justify-content: center; padding: 20px; z-index: 1000; }
+        .modal-overlay.show { display: flex; }
+        .modal-card { max-width: 500px; width: 100%; background: #fff; border-radius: 10px; padding: 24px; box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2); text-align: left; }
+        .modal-card h2 { margin-top: 0; margin-bottom: 10px; color: #004a91; }
+        .modal-card p { margin-top: 0; color: #555; }
+        .driver-links { margin: 16px 0; padding-left: 20px; }
+        .driver-links li { margin-bottom: 8px; }
+        .driver-links a { color: #004a91; word-break: break-all; }
+        .modal-close { background-color: #6c757d; color: #fff; border: none; border-radius: 4px; padding: 8px 14px; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -60,14 +72,55 @@
 
                 <div class="admin-panel">
                     <p>Área Administrativa</p>
-                    <a href="https://minio.blusy.com.br" target="_blank" class="btn-bucket">
-                        <svg viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg"><path d="M90.64 159.8l-26.724-49.627H0l53.816 104.078h148.368l53.816-104.078H192.08l-26.724 49.627H90.64Zm-19.097-62.763 26.724-49.628h60.046l26.724 49.628H256L202.184 0H53.816L0 97.037h71.543Z"/></svg>
-                        Acessar Repositório (MinIO)
-                    </a>
+                    <div class="admin-actions">
+                        <a href="https://minio.blusy.com.br" target="_blank" class="btn-bucket">
+                            <svg viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg"><path d="M90.64 159.8l-26.724-49.627H0l53.816 104.078h148.368l53.816-104.078H192.08l-26.724 49.627H90.64Zm-19.097-62.763 26.724-49.628h60.046l26.724 49.628H256L202.184 0H53.816L0 97.037h71.543Z"/></svg>
+                            Acessar Repositório (MinIO)
+                        </a>
+                        <button type="button" id="openDriversModal" class="btn-drivers">Drivers</button>
+                    </div>
                 </div>
             </div>
             <footer>Sistema Interno WM Saúde</footer>
         </div>
     </div>
+
+    <div id="driversModal" class="modal-overlay" aria-hidden="true">
+        <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="driversModalTitle">
+            <h2 id="driversModalTitle">Drivers</h2>
+            <p>Links diretos para download dos drivers da impressora Canon G3110:</p>
+            <ul class="driver-links">
+                <li><a href="https://gdlp01.c-wss.com/gds/7/0200005387/18/pat_-win-1_120_3-ea34_2.exe" target="_blank" rel="noopener noreferrer">Driver Canon G3110 - PAT (Windows)</a></li>
+                <li><a href="https://gdlp01.c-wss.com/gds/6/0100009116/04/mpp_-win-g3010-1_03-ea34_2.exe" target="_blank" rel="noopener noreferrer">Driver Canon G3110 - MPP (Windows)</a></li>
+            </ul>
+            <button type="button" id="closeDriversModal" class="modal-close">Fechar</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const modal = document.getElementById('driversModal');
+            const openBtn = document.getElementById('openDriversModal');
+            const closeBtn = document.getElementById('closeDriversModal');
+
+            openBtn.addEventListener('click', function() {
+                modal.classList.add('show');
+                modal.setAttribute('aria-hidden', 'false');
+            });
+
+            function closeModal() {
+                modal.classList.remove('show');
+                modal.setAttribute('aria-hidden', 'true');
+            }
+
+            closeBtn.addEventListener('click', closeModal);
+            modal.addEventListener('click', function(event) {
+                if (event.target === modal) closeModal();
+            });
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape' && modal.classList.contains('show')) closeModal();
+            });
+        });
+    </script>
 </body>
 </html>
