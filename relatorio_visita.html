@@ -36,7 +36,6 @@
         .btn{padding:10px 20px;border:none;border-radius:5px;font-weight:700;cursor:pointer;transition:background-color .3s;color:#fff}
         .btn-reset{background-color:#6c757d} .btn-print{background-color:#004a91} .btn-send{background-color:#28a745}
         .btn-back{background-color:#666;padding:8px 15px;text-decoration:none;border-radius:4px;font-size:0.9em;color:#fff;display:inline-block}
-        .driver-link{display:inline-block;margin-bottom:10px;color:#004a91;text-decoration:none;font-size:0.9em;border:1px dashed #004a91;padding:8px 15px;border-radius:4px;background-color:#f0f7ff;font-weight:700}
         #coordenadas_leitura{font-size:0.8em;color:#666;margin-top:3px;font-style:italic}
         @media print{
             @page{size:A4;margin:0} body,html{background-color:#fff;font-size:11pt;color:#000}
@@ -45,7 +44,7 @@
             .form-container{flex-grow:1;display:flex;flex-direction:column}
             form{flex-grow:1;display:flex;flex-direction:column;gap:15px}
             .left-border{display:block;width:15mm;flex-shrink:0}
-            .action-buttons,.no-print,.btn-back,.driver-link,#coordenadas_leitura{display:none!important}
+            .action-buttons,.no-print,.btn-back,#coordenadas_leitura{display:none!important}
             header{justify-content:flex-end;margin-bottom:15px}
             .form-input{border:1px solid #666;background-color:transparent;padding:6px;border-radius:0;color:#000}
             .form-group.print-hide-empty,.item-row.print-hide-empty-row{display:none!important}
@@ -80,15 +79,12 @@
                             </div>
                             <div class="form-group"><label>Tipo de unidade:</label><input type="text" id="tipo_unidade" name="tipo_unidade" class="form-input" placeholder="Carregando..."></div>
                             <div class="form-group"><label>Nome da unidade:</label><input type="text" id="nome_unidade" name="nome_unidade" class="form-input" placeholder="Carregando..."></div>
-                            <div class="form-group"><label>Número de Série:</label><input type="text" name="numero_serie" class="form-input"></div>
-                            <div class="form-group"><label>Patrimônio:</label><input type="text" name="patrimonio" class="form-input"></div>
                         </div>
                         <div class="form-group" style="margin-top:15px"><label>Tipo de visita:</label><div class="radio-group"><div class="radio-item"><input type="radio" id="visita_programada" name="tipo_visita" value="PROGRAMADA"><label for="visita_programada">PROGRAMADA</label></div><div class="radio-item"><input type="radio" id="visita_rotina" name="tipo_visita" value="ROTINA"><label for="visita_rotina">ROTINA</label></div><div class="radio-item"><input type="radio" id="visita_solicitada" name="tipo_visita" value="SOLICITADA" checked=""><label for="visita_solicitada">SOLICITADA</label></div><div class="radio-item"><input type="radio" id="visita_implantacao" name="tipo_visita" value="IMPLANTAÇÃO"><label for="visita_implantacao">IMPLANTAÇÃO</label></div></div></div>
                     </fieldset>
                     <fieldset class="fieldset-expand"><legend>Descrição do Atendimento / Observações</legend><div class="form-group"><label for="descricao">Descreva os serviços realizados e/ou observações:</label><textarea id="descricao" name="descricao" class="form-input"></textarea></div></fieldset>
                     <fieldset class="no-print">
                         <legend>Anexo do Termo Assinado</legend>
-                        <a href="https://s3.blusy.com.br/drivers-publicos/SCANUTILITY.exe" class="driver-link" target="_blank">⬇️ Computador sem Scanner? Baixe o driver da Canon G3110 aqui</a>
                         <div class="form-group"><label>Termo de Visita Assinado (PDF ou Foto):</label><input type="file" id="arquivo_assinado" name="arquivo_assinado" class="form-input" accept="image/*, application/pdf"></div>
                     </fieldset>
                     <fieldset>
@@ -108,7 +104,7 @@
                     <div class="action-buttons"><button type="reset" class="btn btn-reset">Limpar</button><button type="button" id="btnPrint" class="btn btn-print">🖨️ Imprimir / PDF</button><button type="button" id="btnEnviar" class="btn btn-send">☁️ Enviar Arquivo</button></div>
                 </form>
             </div>
-            <footer></footer>
+            <footer>Sistema Interno WM Saúde<br>Desenvolvido por Edimilson Bastos - CNPJ 63.123.007/0001-10</footer>
         </div>
     </div>
     <script>
