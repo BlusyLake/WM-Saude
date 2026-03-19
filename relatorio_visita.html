@@ -24,6 +24,9 @@
         legend{font-weight:700;color:#004a91;padding:0 10px}
         .form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:15px}
         .form-group{display:flex;flex-direction:column}
+        .print-signature-block{display:none}
+        .signature-line{width:100%;height:0;border-bottom:1px solid #000;margin:18mm 0 3mm}
+        .signature-label{font-size:.85em;font-weight:700;color:#444;text-align:center}
         label{margin-bottom:5px;font-weight:700;color:#444}
         .form-input{width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;box-sizing:border-box}
         textarea.form-input{height:120px;resize:vertical}
@@ -46,6 +49,8 @@
             header{justify-content:flex-end;margin-bottom:15px}
             .form-input{border:1px solid #666;background-color:transparent;padding:6px;border-radius:0;color:#000}
             .form-group.print-hide-empty,.item-row.print-hide-empty-row{display:none!important}
+            .print-signature-block{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12mm;break-inside:avoid;margin-top:8mm}
+            .print-signature-block .signature-item{display:flex;flex-direction:column;justify-content:flex-end;min-height:24mm}
             textarea.form-input{height:auto;flex-grow:1;resize:none}
             footer{margin-top:auto;padding-top:10px;font-size:9pt;line-height:1.4}
         }
@@ -90,6 +95,16 @@
                         <legend>Responsáveis</legend>
                         <div class="form-grid"><div class="form-group"><label>Técnico Responsável:</label><input type="text" id="tecnico_responsavel" name="tecnico_responsavel" class="form-input"></div><div class="form-group"><label>Responsável pela unidade:</label><input type="text" id="responsavel_unidade" name="responsavel_unidade" class="form-input"></div><div class="form-group"><label>Cargo Exercido:</label><input type="text" id="cargo_exercido" name="cargo_exercido" class="form-input"></div></div>
                     </fieldset>
+                    <section class="print-signature-block" aria-hidden="true">
+                        <div class="signature-item">
+                            <div class="signature-line"></div>
+                            <div class="signature-label">Assinatura do Técnico Responsável</div>
+                        </div>
+                        <div class="signature-item">
+                            <div class="signature-line"></div>
+                            <div class="signature-label">Assinatura do Cliente / Responsável da Unidade</div>
+                        </div>
+                    </section>
                     <div class="action-buttons"><button type="reset" class="btn btn-reset">Limpar</button><button type="button" id="btnPrint" class="btn btn-print">🖨️ Imprimir / PDF</button><button type="button" id="btnEnviar" class="btn btn-send">☁️ Enviar Arquivo</button></div>
                 </form>
             </div>
