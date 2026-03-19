@@ -41,7 +41,6 @@
             .action-buttons,.btn-add,.btn-remove,.no-print,.btn-back,#coordenadas_leitura{display:none!important}
             header{justify-content:flex-end;margin-bottom:15px}
             .form-input{border:1px solid #666;background-color:transparent;padding:6px;border-radius:0;color:#000}
-            .form-group.print-hide-empty,.item-row.print-hide-empty-row{display:none!important}
             footer{margin-top:auto;padding-top:10px;font-size:9pt;line-height:1.4}
         }
     </style>
@@ -67,7 +66,7 @@
                                 <div id="coordenadas_leitura">Iniciando GPS...</div>
                                 <input type="hidden" id="coordenadas" name="coordenadas">
                             </div>
-                            <div class="form-group"><label>Unidade:</label><input type="text" id="nome_unidade" name="nome_unidade" class="form-input" placeholder="Carregando..."></div>
+                            <div class="form-group"><label>Nome da Unidade:</label><input type="text" id="nome_unidade" name="nome_unidade" class="form-input" placeholder="Carregando..."></div>
                         </div>
                     </fieldset>
                      <fieldset>
@@ -89,7 +88,7 @@
                     </fieldset>
                     <fieldset>
                         <legend>Responsáveis</legend>
-                        <div class="form-grid"><div class="form-group"><label>Técnico:</label><input type="text" name="tecnico_responsavel" class="form-input"></div><div class="form-group"><label>Responsável Unidade:</label><input type="text" name="responsavel_unidade" class="form-input"></div></div>
+                        <div class="form-grid"><div class="form-group"><label>Assinatura do Técnico:</label><input type="text" name="tecnico_responsavel" class="form-input"></div><div class="form-group"><label>Assinatura do Cliente:</label><input type="text" name="responsavel_unidade" class="form-input"></div></div>
                     </fieldset>
                     <div class="action-buttons"><button type="reset" class="btn btn-reset">Limpar</button><button type="button" id="btnPrint" class="btn btn-print">🖨️ Imprimir</button><button type="button" id="btnEnviar" class="btn btn-send">☁️ Enviar</button></div>
                 </form>
@@ -113,21 +112,6 @@
                 return field.value && field.value.trim() !== '';
             }
 
-            function updatePrintVisibility() {
-                document.querySelectorAll('.form-group').forEach(function(group) {
-                    const fields = group.querySelectorAll('input, textarea, select');
-                    if (!fields.length) return;
-                    const hasValue = Array.from(fields).some(isFieldFilled);
-                    group.classList.toggle('print-hide-empty', !hasValue);
-                });
-
-                document.querySelectorAll('.item-row').forEach(function(row) {
-                    const fields = row.querySelectorAll('input, textarea, select');
-                    if (!fields.length) return;
-                    const hasValue = Array.from(fields).some(isFieldFilled);
-                    row.classList.toggle('print-hide-empty-row', !hasValue);
-                });
-            }
 
             function saveDraft() {
                 if (!form) return;
@@ -172,17 +156,9 @@
                 form.addEventListener('reset', function() {
                     setTimeout(function() {
                         clearDraft();
-                        updatePrintVisibility();
                     }, 0);
                 });
             }
-
-            window.addEventListener('beforeprint', updatePrintVisibility);
-            window.addEventListener('afterprint', function() {
-                document.querySelectorAll('.print-hide-empty, .print-hide-empty-row').forEach(function(el) {
-                    el.classList.remove('print-hide-empty', 'print-hide-empty-row');
-                });
-            });
 
             const addItemBtn = document.getElementById('addItemBtn');
             if(addItemBtn){
