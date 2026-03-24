@@ -14,6 +14,7 @@
         header img { max-width: 250px; height: auto; }
         .content-container { flex-grow: 1; text-align: center; }
         footer { width: 100%; margin-top: 50px; padding-top: 20px; border-top: 1px solid #eee; text-align: right; font-size: 11px; color: #555; line-height: 1.6; flex-shrink: 0; }
+        .developer-credit { font-size: 9px; opacity: .65; letter-spacing: .2px; }
         h1 { font-size: 1.8em; margin-bottom: 40px; color: #004a91; }
         .doc-selector { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
         .doc-card { display: block; width: 200px; padding: 20px; border: 1px solid #ddd; border-radius: 8px; text-decoration: none; color: #333; background-color: #f9f9f9; box-shadow: 0 2px 5px rgba(0,0,0,0.05); transition: transform 0.2s, box-shadow 0.2s; }
@@ -36,6 +37,7 @@
         .driver-links li { margin-bottom: 8px; }
         .driver-links a { color: #004a91; word-break: break-all; }
         .modal-close { background-color: #6c757d; color: #fff; border: none; border-radius: 4px; padding: 8px 14px; cursor: pointer; }
+        @media print { .hide-on-print { display: none !important; } .developer-credit { font-size: 7pt; opacity: .45; } }
     </style>
 </head>
 <body>
@@ -81,7 +83,7 @@
                     </div>
                 </div>
             </div>
-            <footer>Sistema Interno WM Saúde</footer>
+            <footer>Sistema Interno WM Saúde<br><span class="developer-credit">Desenvolvido por Edimilson Bastos<span class="hide-on-print"> - CNPJ 63.123.007/0001-10</span></span></footer>
         </div>
     </div>
 

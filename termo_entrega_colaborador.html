@@ -15,6 +15,7 @@
         .form-container{flex-grow:1;display:flex;flex-direction:column}
         form{display:flex;flex-direction:column;gap:15px;flex-grow:1}
         footer{width:100%;margin-top:30px;padding-top:15px;border-top:1px solid #eee;text-align:right;font-size:11px;color:#555;line-height:1.5;flex-shrink:0}
+        .developer-credit{font-size:8px;opacity:.65;letter-spacing:.2px}
         h1{text-align:center;font-size:1.4em;margin-top:0;margin-bottom:15px;color:#004a91}
         .declaracao{font-size:.9em;text-align:justify;margin-bottom:20px;border-left:3px solid #ccc;padding-left:15px;color:#555}
         fieldset{border:1px solid #ddd;border-radius:5px;padding:15px}
@@ -27,7 +28,6 @@
         .btn{padding:10px 20px;border:none;border-radius:5px;font-weight:700;cursor:pointer;transition:background-color .3s;color:#fff}
         .btn-reset{background-color:#6c757d} .btn-print{background-color:#004a91} .btn-send{background-color:#28a745}
         .btn-back{background-color:#666;padding:8px 15px;text-decoration:none;border-radius:4px;font-size:0.9em;color:#fff;display:inline-block}
-        .driver-link{display:inline-block;margin-bottom:10px;color:#004a91;text-decoration:none;font-size:0.9em;border:1px dashed #004a91;padding:8px 15px;border-radius:4px;background-color:#f0f7ff;font-weight:700}
         #coordenadas_leitura{font-size:0.8em;color:#666;margin-top:3px;font-style:italic}
         @media print{
             @page{size:A4;margin:0} body,html{background-color:#fff;font-size:11pt;color:#000}
@@ -36,11 +36,12 @@
             .form-container{flex-grow:1;display:flex;flex-direction:column}
             form{flex-grow:1;display:flex;flex-direction:column;gap:15px}
             .left-border{display:block;width:15mm;flex-shrink:0}
-            .action-buttons,.no-print,.btn-back,.driver-link,#coordenadas_leitura{display:none!important}
+            .action-buttons,.no-print,.btn-back,#coordenadas_leitura{display:none!important}
             header{justify-content:flex-end;margin-bottom:15px}
             .form-input{border:1px solid #666;background-color:transparent;padding:6px;border-radius:0;color:#000}
-            .form-group.print-hide-empty,.item-row.print-hide-empty-row{display:none!important}
             footer{margin-top:auto;padding-top:10px;font-size:9pt;line-height:1.4}
+            .hide-on-print{display:none!important}
+            .developer-credit{font-size:7pt;opacity:.45}
         }
     </style>
 </head>
@@ -62,12 +63,12 @@
                             <div class="form-group"><label>Colaborador:</label><input type="text" name="colaborador" class="form-input"></div>
                             <div class="form-group"><label>CPF:</label><input type="text" name="cpf" class="form-input"></div>
                             <div class="form-group"><label>Cargo:</label><input type="text" name="cargo" class="form-input"></div>
+                            <div class="form-group"><label>Nome da Unidade:</label><input type="text" id="nome_unidade" name="nome_unidade" class="form-input" placeholder="Carregando..."></div>
                         </div>
                         <div class="form-group">
                             <input type="hidden" id="coordenadas" name="coordenadas">
                             <div id="coordenadas_leitura">Iniciando GPS...</div>
                             <input type="hidden" id="municipio" name="municipio">
-                            <input type="hidden" id="nome_unidade" name="nome_unidade">
                         </div>
                     </fieldset>
                      <fieldset>
@@ -77,17 +78,16 @@
                     <p class="declaracao">Declaro que recebi o(s) equipamento(s) acima, em perfeitas condições, assumindo total responsabilidade pela sua guarda e uso profissional.</p>
                     <fieldset class="no-print">
                         <legend>Anexo Assinado</legend>
-                        <a href="https://s3.blusy.com.br/drivers-publicos/SCANUTILITY.exe" class="driver-link" target="_blank">⬇️ Baixar Scanner Canon G3110</a>
                         <div class="form-group"><input type="file" id="arquivo_assinado" name="arquivo_assinado" class="form-input" accept="image/*, application/pdf"></div>
                     </fieldset>
                     <fieldset>
                         <legend>Assinaturas</legend>
-                        <div class="form-grid"><div class="form-group"><label>Empresa:</label><input type="text" name="ass_empresa" class="form-input"></div><div class="form-group"><label>Colaborador:</label><input type="text" name="ass_colaborador" class="form-input"></div></div>
+                        <div class="form-grid"><div class="form-group"><label>Assinatura do Técnico:</label><input type="text" name="ass_tecnico" class="form-input"></div><div class="form-group"><label>Assinatura do Cliente:</label><input type="text" name="ass_cliente" class="form-input"></div></div>
                     </fieldset>
                     <div class="action-buttons"><button type="reset" class="btn btn-reset">Limpar</button><button type="button" id="btnPrint" class="btn btn-print">🖨️ Imprimir</button><button type="button" id="btnEnviar" class="btn btn-send">☁️ Enviar</button></div>
                 </form>
             </div>
-            <footer></footer>
+            <footer>Sistema Interno WM Saúde<br><span class="developer-credit">Desenvolvido por Edimilson Bastos<span class="hide-on-print"> - CNPJ 63.123.007/0001-10</span></span></footer>
         </div>
     </div>
     <script>
@@ -106,21 +106,6 @@
                 return field.value && field.value.trim() !== '';
             }
 
-            function updatePrintVisibility() {
-                document.querySelectorAll('.form-group').forEach(function(group) {
-                    const fields = group.querySelectorAll('input, textarea, select');
-                    if (!fields.length) return;
-                    const hasValue = Array.from(fields).some(isFieldFilled);
-                    group.classList.toggle('print-hide-empty', !hasValue);
-                });
-
-                document.querySelectorAll('.item-row').forEach(function(row) {
-                    const fields = row.querySelectorAll('input, textarea, select');
-                    if (!fields.length) return;
-                    const hasValue = Array.from(fields).some(isFieldFilled);
-                    row.classList.toggle('print-hide-empty-row', !hasValue);
-                });
-            }
 
             function saveDraft() {
                 if (!form) return;
@@ -165,17 +150,9 @@
                 form.addEventListener('reset', function() {
                     setTimeout(function() {
                         clearDraft();
-                        updatePrintVisibility();
                     }, 0);
                 });
             }
-
-            window.addEventListener('beforeprint', updatePrintVisibility);
-            window.addEventListener('afterprint', function() {
-                document.querySelectorAll('.print-hide-empty, .print-hide-empty-row').forEach(function(el) {
-                    el.classList.remove('print-hide-empty', 'print-hide-empty-row');
-                });
-            });
 
             const coordenadasInput = document.getElementById('coordenadas');
             const coordenadasLeitura = document.getElementById('coordenadas_leitura');
