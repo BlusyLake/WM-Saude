@@ -14,6 +14,12 @@
         header img { max-width: 250px; height: auto; }
         .content-container { flex-grow: 1; text-align: center; }
         footer { width: 100%; margin-top: 50px; padding-top: 20px; border-top: 1px solid #eee; text-align: right; font-size: 11px; color: #555; line-height: 1.6; flex-shrink: 0; }
+        .footer-credit { display: inline; }
+        .footer-print-watermark { display: none; }
+        @media print {
+            .footer-credit { display: none !important; }
+            .footer-print-watermark { display: block; font-size: 7pt; letter-spacing: .08em; opacity: .25; text-transform: uppercase; text-align: center; margin-top: 2mm; }
+        }
         h1 { font-size: 1.8em; margin-bottom: 40px; color: #004a91; }
         .doc-selector { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
         .doc-card { display: block; width: 200px; padding: 20px; border: 1px solid #ddd; border-radius: 8px; text-decoration: none; color: #333; background-color: #f9f9f9; box-shadow: 0 2px 5px rgba(0,0,0,0.05); transition: transform 0.2s, box-shadow 0.2s; }
@@ -81,7 +87,7 @@
                     </div>
                 </div>
             </div>
-            <footer>Sistema Interno WM Saúde<br>Desenvolvido por Edimilson Bastos - CNPJ 63.123.007/0001-10</footer>
+            <footer>Sistema Interno WM Saúde<br><span class="footer-credit">Desenvolvido por Edimilson Bastos - CNPJ 63.123.007/0001-10</span><span class="footer-print-watermark">Desenvolvido por Edimilson Bastos</span></footer>
         </div>
     </div>
 
